@@ -29,15 +29,6 @@ class Add: CliktCommand() {
         }
 
         // Export
-//        val cwd = Path("sample.txt").toAbsolutePath()
-//        if (!cwd.exists()) cwd.createFile()
-//        cwd.toFile().let {
-//            val sb = StringBuilder()
-//            sb.appendLine(record)
-//            it.appendText(sb.toString())
-//        }
-//        echo("Success.")
-        
         val e = Record.Entry(address, hostname, aliases)
         Writer.append(e)
         echo("Success")
