@@ -4,6 +4,7 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.arguments.argument
 import io.github.rokuosan.hst.models.Record
 import io.github.rokuosan.hst.utils.Reader
+import io.github.rokuosan.hst.utils.Writer
 
 class Remove: CliktCommand() {
     private val hostname by argument()
@@ -18,10 +19,8 @@ class Remove: CliktCommand() {
                 if (rec is Record.Comment) continue
 
                 val r = rec as Record.Entry
-                return if (r.hostname == host) {
-                    r
-                }else {
-                    null
+                if (r.hostname == host) {
+                    return r
                 }
             }
             return null
@@ -33,7 +32,7 @@ class Remove: CliktCommand() {
 
         // Remove entry
         val rawRecords = Reader.getRawRecords()
-        rawRecords.filter {
+        val filtered = rawRecords.filter {
             // Cast this line to Record
             when (val r = Reader.rowToRecord(it)) {
                 is Record.Comment -> {
@@ -46,6 +45,9 @@ class Remove: CliktCommand() {
                     false
                 }
             }
-        }.map(::println)
+        }
+
+        // Write
+        Writer.writeAll(filtered)
     }
 }

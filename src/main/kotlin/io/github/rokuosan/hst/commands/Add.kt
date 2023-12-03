@@ -39,7 +39,7 @@ class Add: CliktCommand() {
 //        echo("Success.")
         
         val e = Record.Entry(address, hostname, aliases)
-        Writer.write(e)
+        Writer.append(e)
         echo("Success")
     }
 }
