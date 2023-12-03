@@ -1,0 +1,7 @@
+path: /etc/hosts
+
+# TODO: Experimental Features
+#hosts:
+#  records: /etc/hosts
+#  allow: /etc/hosts.allow
+#  deny: /etc/hosts.deny
