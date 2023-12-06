@@ -1,7 +1,8 @@
 package io.github.rokuosan.hst.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
-import com.github.ajalt.clikt.parameters.arguments.argument
+import com.github.ajalt.clikt.parameters.options.option
+import com.github.ajalt.clikt.parameters.options.prompt
 import com.github.ajalt.mordant.rendering.TextColors
 import com.github.ajalt.mordant.table.Borders
 import com.github.ajalt.mordant.table.table
@@ -13,8 +14,8 @@ import io.github.rokuosan.hst.utils.Writer
 import java.lang.Exception
 
 class Remove: CliktCommand() {
-    private val address by argument()
-    private val hostname by argument()
+    private val address: String by option("-a", "--address", help = "Address").prompt()
+    private val hostname: String by option("-n", "--hostname", help = "Hostname").prompt()
 
     override fun run() {
         val records = Reader.getRecords()
