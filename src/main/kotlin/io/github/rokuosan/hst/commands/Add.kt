@@ -3,6 +3,7 @@ package io.github.rokuosan.hst.commands
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.arguments.multiple
+import com.github.ajalt.mordant.table.table
 import com.github.ajalt.mordant.terminal.Terminal
 import com.github.ajalt.mordant.terminal.YesNoPrompt
 import io.github.rokuosan.hst.models.Record
@@ -17,12 +18,16 @@ class Add: CliktCommand() {
     override fun run() {
         val terminal = Terminal()
 
-        // Create a record
-        val record = "$address $hostname ".plus(aliases.joinToString(" "))
-
         // Confirm
-        echo("The record will be set in hosts:")
-        echo("  - $record")
+        echo(table {
+            header {
+                row("Address", "Hostname", "Aliases")
+            }
+            body {
+                row(address, hostname, aliases.joinToString("\n"))
+            }
+        })
+
         if (YesNoPrompt("Continue?", terminal).ask() == false) {
             echo("Aborted.")
             return
