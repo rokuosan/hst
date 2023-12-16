@@ -69,7 +69,19 @@ object Reader {
                 }
             }
             return null
-        }()?:return null
+        }()
+
+        if (configFile == null) {
+            System.getProperty("os.name")?.let {
+                if (it.contains("Windows", ignoreCase = true)) {
+                    return YamlConfig(path = "C:\\Windows\\System32\\drivers\\etc\\hosts")
+                }else {
+                    return YamlConfig(path = "/etc/hosts")
+                }
+            }
+
+            return YamlConfig("/etc/hosts")
+        }
 
         // Load Config
         val raw = configFile.bufferedReader().readText()
